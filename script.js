@@ -1,5 +1,3 @@
-const SELECTED_CELL_COLOR = "orange";
-
 // *** LAYOUT THINGS ***
 function prepareLayout(words) {
     document.getElementById("starterForm").hidden = true;
@@ -107,6 +105,53 @@ function getFillableRows(gridSize) {
     return fillableRows;
 }
 
+function lockFoundWord(word, row) {
+    console.log(word);
+    var rowLetters = "";
+    for (element of row.children) {
+        rowLetters += element.textContent;
+    }
+    var startIndex = rowLetters.indexOf(word);
+    
+    if (startIndex == -1) {
+        startIndex = rowLetters.indexOf(word.split("").reverse().join(""));
+    }
+
+    for (let i = startIndex; i < startIndex + word.length; i++) {
+        row.children[i].classList.add("highlighted");
+    }
+
+    for (element of row.children) {     // removes eventListeners from all row cells
+        element.removeEventListener("mouseenter", mouseMovedOnLetter);
+        element.removeEventListener("mouseup", mouseUpOnLetter);
+        element.removeEventListener("mousedown", mouseDownOnLetter);
+        element.classList.add("locked");
+    }
+
+    removeWordFromList(word);
+}
+
+function removeWordFromList(foundWord) {
+    const alreadyFoundWords = document.getElementById("listOfWords").getElementsByTagName("s");
+    var alreadyFoundWordsArray = [];
+    for (element of alreadyFoundWords) {
+        alreadyFoundWordsArray.push(element.textContent);
+    } 
+    alreadyFoundWordsArray += foundWord;
+    var listOfWords = document.getElementById("listOfWords");
+    var listArray = listOfWords.textContent.trim().split("\n");
+    console.log(listArray);
+    listOfWords.textContent = "";
+    for (word of listArray) {
+        if (alreadyFoundWordsArray.includes(word)) {
+            listOfWords.innerHTML += `<s>${word}</s>` + "\n";
+        }
+        else {
+            listOfWords.innerHTML += word + "\n";
+        }
+    }
+}
+
 function checkFoundWords(row) {
     var selectedLetters = "";
     for (element of row.children) {
@@ -121,14 +166,11 @@ function checkFoundWords(row) {
     for (word of words) {
         const wordArray = Array.from(word);
         if (selectedLetters == wordArray.join("") || selectedLetters == wordArray.reverse().join("")) {
-            alert("IR!");
-            wordFound = true;
-        }
-        else {
-            wordFound = false
+            //alert("IR!");
+            return word;
         }
     }
-    return wordFound;
+    return false;
 }
 
 // *** EVENT LISTENERS ***
@@ -149,10 +191,14 @@ function mouseUpOnLetter() {
         element.removeEventListener("mouseenter", mouseMovedOnLetter);
         element.addEventListener("mouseup", mouseUpOnLetter);
     }
-    if (!checkFoundWords(row)) {
+    var wordFound = checkFoundWords(row);
+    if (wordFound == false) {
         for (element of row.children) {
             element.classList.remove("selected");
         }
+    }
+    else {
+        lockFoundWord(wordFound, row);
     }
 }
 

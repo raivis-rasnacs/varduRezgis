@@ -1,5 +1,5 @@
 body {
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 #listOfWords {
@@ -24,9 +24,18 @@ body {
     cursor: pointer;
     user-select: none;
     padding: 5px;
+    font-weight: bold;
 }
 
 .selected {
-    background-color: black;
-    color: white;
+    text-decoration: underline;
+}
+
+.highlighted {
+    color: red !important;
+    background-color: white;
+}
+
+.locked {
+    color: lightgrey;
 }
