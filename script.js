@@ -79,16 +79,8 @@ function makeTable(grid) {
         for (element in grid[row]) {
             var tableCell = document.createElement("td");
             tableCell.textContent = grid[row][element].toUpperCase();
-            if (grid[row][element] == grid[row][element].toUpperCase()) {
-                tableCell.classList.add("*letter*");
-            }
-            else {
-                tableCell.classList.add("letter");
-            }
             tableCell.addEventListener("mousedown", mouseDownOnLetter);
-            
-            
-        tableRow.append(tableCell);
+            tableRow.append(tableCell);
         }
         table.append(tableRow);
     }
@@ -118,7 +110,7 @@ function getFillableRows(gridSize) {
 function checkFoundWords(row) {
     var selectedLetters = "";
     for (element of row.children) {
-        if (element.style.backgroundColor == SELECTED_CELL_COLOR) {
+        if (element.classList.contains("selected")) {
             selectedLetters += element.textContent;
         }
     }
@@ -142,7 +134,7 @@ function checkFoundWords(row) {
 // *** EVENT LISTENERS ***
 
 function mouseDownOnLetter() {
-    this.style.backgroundColor = SELECTED_CELL_COLOR;
+    this.classList.add("selected");
     const row = this.parentElement;
     for (element of row.children) {
         element.addEventListener("mouseenter", mouseMovedOnLetter);
@@ -159,13 +151,13 @@ function mouseUpOnLetter() {
     }
     if (!checkFoundWords(row)) {
         for (element of row.children) {
-            element.style.backgroundColor = "lightblue";
+            element.classList.remove("selected");
         }
     }
 }
 
 function mouseMovedOnLetter() {
-    this.style.backgroundColor = SELECTED_CELL_COLOR;
+    this.classList.add("selected");
 }
 
 function mouseOutOfRow() {

@@ -14,7 +14,7 @@ body {
 
 #grid {
     border-collapse: collapse;
-    background-color: lightblue;
+    border: 3px solid black;
 }
 
 #grid td {
@@ -24,4 +24,9 @@ body {
     cursor: pointer;
     user-select: none;
     padding: 5px;
+}
+
+.selected {
+    background-color: black;
+    color: white;
 }
