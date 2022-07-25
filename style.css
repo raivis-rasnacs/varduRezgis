@@ -2,14 +2,26 @@ body {
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-table {
-    border-collapse: collapse;
+#listOfWords {
+    width: 30%;
+    word-wrap: normal;
 }
 
-td {
+#words {
+    width: 300px;
+    height: 50px;
+}
+
+#grid {
+    border-collapse: collapse;
+    background-color: lightblue;
+}
+
+#grid td {
     text-align: center;
     width: 30px;
     height: 30px;
     cursor: pointer;
     user-select: none;
+    padding: 5px;
 }

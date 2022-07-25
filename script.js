@@ -1,21 +1,17 @@
-const alphabet = [
-    "A", "Ā", "B", "C", "Č", "D", 
-    "E", "Ē", "F", "G", "Ģ", "H", 
-    "I", "Ī", "J", "K", "Ķ", "L", 
-    "Ļ", "M", "N", "Ņ", "O", "P", 
-    "R", "S", "Š", "T", "U", "Ū", 
-    "V", "Z", "Ž"
-];
+const SELECTED_CELL_COLOR = "orange";
 
-const words = [
-    "ZEĶE", "LĀDE", "VILCIENS", "SPOGULIS", 
-    "KRŪZE", "JUCEKLIS", "CIPARNĪCA", "GLIEMEŽVĀKS", 
-    "KLEITA", "TĒJKANNA", "MELODIJA", "HARMONIJA",
-    "ORĶESTRIS", "KONCERTZĀLE", "PROMBŪTNE", "BRAVŪRA", 
-    "CILVĒCĪBA", "KLEJOTĀJS", "DRAUDZĪBA"
-]
+// *** LAYOUT THINGS ***
+function prepareLayout(words) {
+    document.getElementById("starterForm").hidden = true;
+    var list = "<p id='listOfWords'></p>";
+    document.getElementById("title").insertAdjacentHTML("afterend", list);
+    for (word of words) {
+        document.getElementById("listOfWords").textContent += word + "\n";
+    }
+}
 
-function getTheLengthOfTheLongestWord() {
+// *** GAME LOGIC ***
+function getTheLengthOfTheLongestWord(words) {
     const allLengths = [];
     for (word of words) {
         allLengths.push(word.length);
@@ -27,8 +23,9 @@ function getTheLengthOfTheLongestWord() {
 getGridSize = (theLengthOfTheLongestWord, totalWords) => Math.max(...[theLengthOfTheLongestWord, totalWords]);
 
 function newGrid() {
-    const gridSize = getGridSize(getTheLengthOfTheLongestWord(), words.length);
-    console.log(gridSize);
+    const words = document.getElementById("words").value.toUpperCase().split(" ");
+    prepareLayout(words);
+    const gridSize = getGridSize(getTheLengthOfTheLongestWord(words), words.length);
 
     var grid = [];
     for (i = 0; i < gridSize; i++) {
@@ -37,14 +34,12 @@ function newGrid() {
             grid[i].push("");
         }
     }
-    fillUpGrid(grid, gridSize);
+    fillUpGrid(words, grid, gridSize);
 }
 
-function fillUpGrid(grid, gridSize) {
+function fillUpGrid(words, grid, gridSize) {
     var fillableRows = getFillableRows(gridSize); 
-    console.log(fillableRows);
     
-    var usedWords = [];
     for (let i = 0; i < words.length; i++) {
         if (randInt(0, 1) == 0) { var direction = "normal"; } else { var direction = "reverse"; }
         if (direction == "normal") { var startPosition = randInt(0, gridSize - words[i].length); } else { var startPosition = randInt(0 + words[i].length - 1, gridSize - 1); }
@@ -57,6 +52,15 @@ function fillUpGrid(grid, gridSize) {
 }
 
 function fillBlankSpaces(grid) {
+    const alphabet = [
+        "A", "Ā", "B", "C", "Č", "D", 
+        "E", "Ē", "F", "G", "Ģ", "H", 
+        "I", "Ī", "J", "K", "Ķ", "L", 
+        "Ļ", "M", "N", "Ņ", "O", "P", 
+        "R", "S", "Š", "T", "U", "Ū", 
+        "V", "Z", "Ž"
+    ];
+
     for (row in grid) {
         for (element in grid[row]) {
             if (grid[row][element] == "") {
@@ -111,14 +115,34 @@ function getFillableRows(gridSize) {
     return fillableRows;
 }
 
-function randInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) ) + min;
+function checkFoundWords(row) {
+    var selectedLetters = "";
+    for (element of row.children) {
+        if (element.style.backgroundColor == SELECTED_CELL_COLOR) {
+            selectedLetters += element.textContent;
+        }
+    }
+
+    const words = document.getElementById("listOfWords").textContent.toUpperCase().trim().split("\n");
+    
+    var wordFound;
+    for (word of words) {
+        const wordArray = Array.from(word);
+        if (selectedLetters == wordArray.join("") || selectedLetters == wordArray.reverse().join("")) {
+            alert("IR!");
+            wordFound = true;
+        }
+        else {
+            wordFound = false
+        }
+    }
+    return wordFound;
 }
 
-newGrid();
+// *** EVENT LISTENERS ***
 
 function mouseDownOnLetter() {
-    this.style.backgroundColor = "lightgreen";
+    this.style.backgroundColor = SELECTED_CELL_COLOR;
     const row = this.parentElement;
     for (element of row.children) {
         element.addEventListener("mouseenter", mouseMovedOnLetter);
@@ -133,14 +157,24 @@ function mouseUpOnLetter() {
         element.removeEventListener("mouseenter", mouseMovedOnLetter);
         element.addEventListener("mouseup", mouseUpOnLetter);
     }
+    if (!checkFoundWords(row)) {
+        for (element of row.children) {
+            element.style.backgroundColor = "lightblue";
+        }
+    }
 }
 
 function mouseMovedOnLetter() {
-    this.style.backgroundColor = "lightgreen";
+    this.style.backgroundColor = SELECTED_CELL_COLOR;
 }
 
 function mouseOutOfRow() {
     for (element of this.children) {
         element.removeEventListener("mouseenter", mouseMovedOnLetter);
     }
+}
+
+// *** JUST A RANDOMIZER ***
+function randInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
