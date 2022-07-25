@@ -106,7 +106,6 @@ function getFillableRows(gridSize) {
 }
 
 function lockFoundWord(word, row) {
-    console.log(word);
     var rowLetters = "";
     for (element of row.children) {
         rowLetters += element.textContent;
@@ -140,7 +139,6 @@ function removeWordFromList(foundWord) {
     alreadyFoundWordsArray += foundWord;
     var listOfWords = document.getElementById("listOfWords");
     var listArray = listOfWords.textContent.trim().split("\n");
-    console.log(listArray);
     listOfWords.textContent = "";
     for (word of listArray) {
         if (alreadyFoundWordsArray.includes(word)) {
