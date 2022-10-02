@@ -1,28 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Meklē vārdus!</title>
+    
+    <!-- Bootstrap linkage -->
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    
     <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <center>
-        <h1 id="title">Vārdu režģis</h1>
-        <div id="starterForm">
-        <p id="suggestion">Ievadi vārdus, atdalot tos ar atstarpi!</p>
-        <textarea id="words">kuģis autobuss lilija neļķe tramvajs glezna laiva helikopters mājražotājs rudzupuķe skrejceļš sivēns</textarea><br><br>
-        <button id="startButton" onclick="newGrid()">Parādīt vārdu režģi!</button><br><br>
+    <link rel="stylesheet" href="bs-overrides.css">
+
+    <!-- JS -->
+    <script src="script.js"></script>
+    <title>Puzzle :: Choose Topic</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="display-4 text-center">Word Puzzle</h1>
+            </div>
         </div>
-        
-        <table id="grid">
-
-        </table>
-    </center>
-
-
-
-	<script src="script.js"></script>
-  </body>
+        <div class="row">
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-body">
+                        <p id="placeholder-text">your puzzle will appear here...</p>
+                        <table id="grid"></table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <button onclick="newGrid(['newyork', 'amsterdam', 'brussels', 'berlins', 'riga', 'london', 'gothenburg', 'helsinki', 'tallin'])"class="btn btn-primary" style="width: 100%;">Cities</button>
+                <button class="btn btn-primary" style="width: 100%;">Animals</button>
+                <button class="btn btn-primary" style="width: 100%;">Brands</button>
+                <textarea class="form-control" name="words" id="" rows="5" placeholder="or type in your own words..."></textarea>
+                <button class="btn btn-primary" style="width: 100%;">My words</button>
+            </div>
+        </div>
+    </div>
+</body>
 </html>

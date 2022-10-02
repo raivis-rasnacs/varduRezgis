@@ -20,9 +20,9 @@ function getTheLengthOfTheLongestWord(words) {
 
 getGridSize = (theLengthOfTheLongestWord, totalWords) => Math.max(...[theLengthOfTheLongestWord, totalWords]);
 
-function newGrid() {
-    const words = document.getElementById("words").value.toUpperCase().split(" ");
-    prepareLayout(words);
+function newGrid(wordList) {
+    const words = wordList;
+    //prepareLayout(words);
     const gridSize = getGridSize(getTheLengthOfTheLongestWord(words), words.length);
 
     var grid = [];
