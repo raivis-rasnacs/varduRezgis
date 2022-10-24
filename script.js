@@ -9,6 +9,19 @@ function prepareLayout(words) {
     }
 }
 
+function resizeTable() {
+    
+    var table = document.getElementById("grid");
+    for (row of table.rows) {
+        
+        for (cell of row.cells) {
+            cell.style.width = "50px";
+            cell.style.height = "50px";
+        }
+    }
+    
+}
+
 // *** GAME LOGIC ***
 function getTheLengthOfTheLongestWord(words) {
     const allLengths = [];
@@ -23,7 +36,6 @@ getGridSize = (theLengthOfTheLongestWord, totalWords) => Math.max(...[theLengthO
 
 function newGrid(wordList) {
     const words = wordList;
-    console.log(words);
     prepareLayout(words);
     const gridSize = getGridSize(getTheLengthOfTheLongestWord(words), words.length);
     //console.log(gridSize);
@@ -71,9 +83,15 @@ function fillBlankSpaces(grid) {
     makeTable(grid);
 }
 
+function clearTable(table) {
+    while (table.rows.length > 0) {
+        table.rows[0].remove();
+    }
+}
+
 function makeTable(grid) {
     const table = document.getElementById("grid");
-
+    clearTable(table);
     for (row in grid) {
         var tableRow = document.createElement("tr");
         for (element in grid[row]) {
@@ -84,6 +102,8 @@ function makeTable(grid) {
         }
         table.append(tableRow);
     }
+    resizeTable();
+    
 }
 
 function getFillableRows(words, gridSize) {
@@ -166,7 +186,6 @@ function checkFoundWords(row) {
     for (word of words) {
         const wordArray = Array.from(word);
         if (selectedLetters == wordArray.join("") || selectedLetters == wordArray.reverse().join("")) {
-            //alert("IR!");
             return word;
         }
     }

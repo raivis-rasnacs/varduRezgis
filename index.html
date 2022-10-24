@@ -13,10 +13,10 @@
     <link rel="stylesheet" href="bs-overrides.css">
 
     <!-- JS -->
-    <script src="script.js"></script>
+    <script defer src="script.js"></script>
     <title>Puzzle :: Choose Topic</title>
 </head>
-<body>
+<body onresize="resizeTable()" onload="newGrid(['NEWYORK', 'AMSTERDAM', 'BRUSSELS', 'BERLIN', 'RIGA', 'LONDON', 'GOTHENBURG', 'HELSINKI', 'TALLIN'])">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -24,20 +24,41 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-8">
+            <div class="col-2">
                 <div class="card">
                     <div class="card-body">
-                        <p id="listOfWords">your puzzle will appear here...</p>
+                        <h5 class="card-title">Words</h5>
+                        <p id="listOfWords">your puzzle will appear below...</p>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
                         <table id="grid"></table>
                     </div>
                 </div>
             </div>
             <div class="col-4">
-                <button onclick="newGrid(['NEWYORK', 'AMSTERDAM', 'BRUSSELS', 'BERLIN', 'RIGA', 'LONDON', 'GOTHENBURG', 'HELSINKI', 'TALLIN'])"class="btn btn-primary" style="width: 100%;">Cities</button>
-                <button class="btn btn-primary" style="width: 100%;">Animals</button>
-                <button class="btn btn-primary" style="width: 100%;">Brands</button>
-                <textarea class="form-control" name="words" id="" rows="5" placeholder="or type in your own words..."></textarea>
-                <button class="btn btn-primary" style="width: 100%;">My words</button>
+                <!-- Topics -->
+                <button onclick="newGrid(['NEWYORK', 'AMSTERDAM', 'BRUSSELS', 'BERLIN', 'RIGA', 'LONDON', 'GOTHENBURG', 'HELSINKI', 'TALLIN'])" class="btn btn-primary" style="width: 100%;">Cities</button>
+                <button onclick="newGrid(['ZEBRA', 'DOG', 'CAMEL', 'GIRAFFE', 'FOX', 'MONKEY', 'COW', 'PIG', 'SHIP', 'SNAKE', 'DELPHIN', 'SHARK'])"class="btn btn-primary" style="width: 100%;">Animals</button>
+                <button onclick="newGrid(['AUDI', 'TOYOTA', 'HYUNDAI', 'OPEL', 'VOLVO', 'SAAB', 'VOLKSWAGEN', 'ŠKODA', 'BMW', 'MERCEDES', 'PORSCHE', 'LEXUS'])"class="btn btn-primary" style="width: 100%;">Cars</button>
+                
+                <!-- Option to type in custom words for some future release -->
+                <textarea hidden class="form-control" name="words" id="" rows="5" placeholder="or type in your own words..."></textarea>
+                <button hidden class="btn btn-primary" style="width: 100%;">My words</button>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">How to play?</h5>
+                                <!-- Instructions for user -->
+                                <p>Choose one of topics and you'll see grid of letters appearing on the screen. Words are positioned horizontally in both right-to-left and left-to-right direction. Once you find a word, drag a mouse over it and you'll see it struck-through in a list of words.</p>
+                            </ol>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

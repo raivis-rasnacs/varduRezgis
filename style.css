@@ -1,6 +1,6 @@
-/*body {
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}*/
+body {
+    background-color: rgb(152, 246, 246);
+}
 
 #listOfWords {
     width: 100%;
@@ -13,9 +13,9 @@
 }
 
 #grid {
-    border-collapse: collapse;
+    border-collapse: separate;
     width: 100%;
-    /*border: 3px solid black;*/
+    border-spacing: 1px;
 }
 
 #grid td {
@@ -24,17 +24,17 @@
     height: 30px;
     cursor: pointer;
     user-select: none;
-    padding: 5px;
-    /*font-weight: bold;*/
+    padding: 3px;
+    border-radius: 5px;
 }
 
 .selected {
-    text-decoration: underline;
+    background-color: rgb(216, 216, 216);
 }
 
 .highlighted {
-    color: red !important;
-    background-color: white;
+    color: white !important;
+    background-color: orange;
 }
 
 .locked {
