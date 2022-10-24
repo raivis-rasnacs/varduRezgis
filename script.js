@@ -1,25 +1,29 @@
 // *** LAYOUT THINGS ***
 function prepareLayout(words) {
-    //document.getElementById("starterForm").hidden = true;
-    //var list = "<p id='listOfWords'></p>";
-    //document.getElementById("title").insertAdjacentHTML("afterend", list);
-    document.getElementById("listOfWords").textContent = "";
+    const saraksts = document.getElementById("listOfWords");
+
+    // Clears list
+    while (saraksts.children.length > 0) {
+        saraksts.children[0].remove();
+    }
+
+    // Adds words to list
     for (word of words) {
-        document.getElementById("listOfWords").textContent += word + "\n";
+        var wordInList = document.createElement("li");
+        wordInList.textContent = word;
+        saraksts.append(wordInList);
     }
 }
 
+// Aligns table to look better
 function resizeTable() {
-    
     var table = document.getElementById("grid");
     for (row of table.rows) {
-        
         for (cell of row.cells) {
             cell.style.width = "50px";
             cell.style.height = "50px";
         }
     }
-    
 }
 
 // *** GAME LOGIC ***
@@ -34,6 +38,7 @@ function getTheLengthOfTheLongestWord(words) {
 
 getGridSize = (theLengthOfTheLongestWord, totalWords) => Math.max(...[theLengthOfTheLongestWord, totalWords]);
 
+// Makes correctly sized empty array
 function newGrid(wordList) {
     const words = wordList;
     prepareLayout(words);
@@ -48,6 +53,7 @@ function newGrid(wordList) {
     fillUpGrid(words, grid, gridSize);
 }
 
+// Fills an array with given words
 function fillUpGrid(words, grid, gridSize) {
     
     var fillableRows = getFillableRows(words, gridSize); 
@@ -62,6 +68,7 @@ function fillUpGrid(words, grid, gridSize) {
     fillBlankSpaces(grid);
 }
 
+// Fills grid with random letters when words are positioned already
 function fillBlankSpaces(grid) {
     const alphabet = [
         "A", "Ā", "B", "C", "Č", "D", 
@@ -82,12 +89,14 @@ function fillBlankSpaces(grid) {
     makeTable(grid);
 }
 
+// Clears table before new words are inserted
 function clearTable(table) {
     while (table.rows.length > 0) {
         table.rows[0].remove();
     }
 }
 
+// Makes table from given letters
 function makeTable(grid) {
     const table = document.getElementById("grid");
     clearTable(table);
@@ -102,9 +111,9 @@ function makeTable(grid) {
         table.append(tableRow);
     }
     resizeTable();
-    
 }
 
+// Randomly generarates array with numbers of rows where words will be in
 function getFillableRows(words, gridSize) {
     var fillableRows = [];
     if (words.length < gridSize) {
@@ -126,6 +135,7 @@ function getFillableRows(words, gridSize) {
     return fillableRows;
 }
 
+// If word is found, disables its parent row
 function lockFoundWord(word, row) {
     var rowLetters = "";
     for (element of row.children) {
@@ -151,26 +161,17 @@ function lockFoundWord(word, row) {
     removeWordFromList(word);
 }
 
+// Removes found word from list
 function removeWordFromList(foundWord) {
-    const alreadyFoundWords = document.getElementById("listOfWords").getElementsByTagName("s");
-    var alreadyFoundWordsArray = [];
-    for (element of alreadyFoundWords) {
-        alreadyFoundWordsArray.push(element.textContent);
-    } 
-    alreadyFoundWordsArray += foundWord;
-    var listOfWords = document.getElementById("listOfWords");
-    var listArray = listOfWords.textContent.trim().split("\n");
-    listOfWords.textContent = "";
-    for (word of listArray) {
-        if (alreadyFoundWordsArray.includes(word)) {
-            listOfWords.innerHTML += `<s>${word}</s>` + "\n";
+    const list = document.getElementById("listOfWords");
+    for (list_item of list.children) {
+        if (list_item.textContent == foundWord) {
+            list_item.classList.add("found");
         }
-        else {
-            listOfWords.innerHTML += word + "\n";
         }
-    }
 }
 
+// Checks if selected word is present in list
 function checkFoundWords(row) {
     var selectedLetters = "";
     for (element of row.children) {
@@ -179,8 +180,12 @@ function checkFoundWords(row) {
         }
     }
 
-    const words = document.getElementById("listOfWords").textContent.toUpperCase().trim().split("\n");
-    
+    const words = [];
+    const list = document.getElementById("listOfWords");
+    for (list_item of list.children) {
+        words.push(list_item.textContent);
+    }
+
     var wordFound;
     for (word of words) {
         const wordArray = Array.from(word);
