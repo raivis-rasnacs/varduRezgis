@@ -1,9 +1,9 @@
-body {
+/*body {
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+}*/
 
 #listOfWords {
-    width: 30%;
+    width: 100%;
     word-wrap: normal;
 }
 
@@ -14,7 +14,8 @@ body {
 
 #grid {
     border-collapse: collapse;
-    border: 3px solid black;
+    width: 100%;
+    /*border: 3px solid black;*/
 }
 
 #grid td {
@@ -24,7 +25,7 @@ body {
     cursor: pointer;
     user-select: none;
     padding: 5px;
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 
 .selected {

@@ -1,8 +1,9 @@
 // *** LAYOUT THINGS ***
 function prepareLayout(words) {
-    document.getElementById("starterForm").hidden = true;
-    var list = "<p id='listOfWords'></p>";
-    document.getElementById("title").insertAdjacentHTML("afterend", list);
+    //document.getElementById("starterForm").hidden = true;
+    //var list = "<p id='listOfWords'></p>";
+    //document.getElementById("title").insertAdjacentHTML("afterend", list);
+    document.getElementById("listOfWords").textContent = "";
     for (word of words) {
         document.getElementById("listOfWords").textContent += word + "\n";
     }
@@ -22,9 +23,10 @@ getGridSize = (theLengthOfTheLongestWord, totalWords) => Math.max(...[theLengthO
 
 function newGrid(wordList) {
     const words = wordList;
-    //prepareLayout(words);
+    console.log(words);
+    prepareLayout(words);
     const gridSize = getGridSize(getTheLengthOfTheLongestWord(words), words.length);
-
+    //console.log(gridSize);
     var grid = [];
     for (i = 0; i < gridSize; i++) {
         grid.push([]);
@@ -36,13 +38,13 @@ function newGrid(wordList) {
 }
 
 function fillUpGrid(words, grid, gridSize) {
-    var fillableRows = getFillableRows(gridSize); 
     
+    var fillableRows = getFillableRows(words, gridSize); 
     for (let i = 0; i < words.length; i++) {
         if (randInt(0, 1) == 0) { var direction = "normal"; } else { var direction = "reverse"; }
         if (direction == "normal") { var startPosition = randInt(0, gridSize - words[i].length); } else { var startPosition = randInt(0 + words[i].length - 1, gridSize - 1); }
         for (letter of words[i]) {
-            grid[fillableRows[i]][startPosition] = letter;
+            grid[fillableRows[i]][startPosition] = letter; 
             if (direction == "normal") { startPosition++; } else { startPosition--; }
         }
     }
@@ -84,11 +86,11 @@ function makeTable(grid) {
     }
 }
 
-function getFillableRows(gridSize) {
+function getFillableRows(words, gridSize) {
     var fillableRows = [];
     if (words.length < gridSize) {
         while (fillableRows.length < words.length) {
-            let row = randInt(0, gridSize);
+            let row = randInt(0, gridSize - 1);
             if (!fillableRows.includes(row)) {
                 fillableRows.push(row);
             }
