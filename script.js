@@ -38,7 +38,6 @@ function newGrid(wordList) {
     const words = wordList;
     prepareLayout(words);
     const gridSize = getGridSize(getTheLengthOfTheLongestWord(words), words.length);
-    //console.log(gridSize);
     var grid = [];
     for (i = 0; i < gridSize; i++) {
         grid.push([]);
